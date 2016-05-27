@@ -3,6 +3,7 @@ var DISTANCE_BETWEEN_ROWS = 85;
 var FIRST_ROW = 55;
 
 // X coordinates
+var DISTANCE_BETWEEN_COLUMNS = 100;
 var LEFT_SCREEN = -100;
 var RIGHT_SCREEN = 505;
 
@@ -10,7 +11,20 @@ var RIGHT_SCREEN = 505;
 var MAX_SPEED = 300;
 var MIN_SPEED = 50;
 
-// Other
+// Player
+var STARTING_X = 200;
+var STARTING_Y = 395;
+var MAX_X = 400;
+var MIN_X = 0;
+var MAX_Y = 395;
+var MIN_Y = 100;
+var HITBOX = 50;
+
+// Score
+var SCORE_X = 20;
+var SCORE_Y = 20;
+
+// Enemy
 var NUM_OF_ENEMIES = 3;
 
 // Enemies our player must avoid
@@ -47,10 +61,57 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function() {};
+var Player = function() {
+  this.sprite = 'images/char-boy.png';
+  this.x = STARTING_X;
+  this.y = STARTING_Y;
+  this.score = 0;
+};
 
-Player.prototype.update = function() {};
-Player.prototype.render = function() {};
+Player.prototype.update = function() {
+  // Handle collision
+  for (var i = 0; i < allEnemies.length; i++) {
+    if (Math.abs(this.x - allEnemies[i].x) < HITBOX && this.y == allEnemies[i].y) {
+      this.x = STARTING_X;
+      this.y = STARTING_Y;
+    }
+  }
+};
+// Draw the player on the screen, required method for game
+Player.prototype.render = function() {
+  ctx.clearRect(SCORE_X - 20, SCORE_Y - 20, 50, 50);
+  ctx.fillText(this.score, SCORE_X, SCORE_Y);
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+Player.prototype.handleInput = function(keyCode) {
+  switch (keyCode) {
+    case "left":
+      if (this.x > MIN_X) {
+        this.x -= DISTANCE_BETWEEN_COLUMNS;
+      }
+      break;
+    case "up":
+      if (this.y > MIN_Y) {
+        this.y -= DISTANCE_BETWEEN_ROWS;
+      } else {
+        // The player won!
+        this.score++;
+        this.y = STARTING_Y;
+      }
+      break;
+    case "right":
+      if (this.x < MAX_X) {
+        this.x += DISTANCE_BETWEEN_COLUMNS;
+      }
+      break;
+    case "down":
+      if (this.y < MAX_Y) {
+        this.y += DISTANCE_BETWEEN_ROWS;
+      }
+      break;
+  }
+};
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
