@@ -1,6 +1,14 @@
-frontend-nanodegree-arcade-game
-===============================
+# Classic Arcade Game Frogger
 
-Students should use this [rubric](https://www.udacity.com/course/viewer/#!/c-nd001/l-2696458597/m-2687128535) for self-checking their submission.
+## To Start
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+Clone the repo locally.  Open up `index.html` from a browser of your choice  
+and jump right into the game!
+
+## Directions
+
+Directions are simply the up, right, down, and left arrows on your keyboard.
+
+## To win
+
+Get to the water at the end of the map, your score counter will go up.
